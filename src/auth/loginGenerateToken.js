@@ -7,7 +7,7 @@ const loginAuth = (email, pass) => {
     algorithm: 'HS256',
     expiresIn: '1d',
   };
-  const token = jwt.sign({email, pass}, secret, configJWT);
+  const token = jwt.sign({ email, pass }, secret, configJWT);
   
   return token;
 };
