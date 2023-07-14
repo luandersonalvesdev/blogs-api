@@ -1,4 +1,4 @@
-const loginGenerateToken = require('../auth/loginGenerateToken');
+const generateToken = require('../auth/authToken');
 const userSchemaValidation = require('../validation/userSchemaValidation');
 const { User } = require('../models');
 
@@ -12,10 +12,13 @@ const insert = async (newUserData) => {
 
   await User.create(newUserData);
 
-  const tokenNewUser = loginGenerateToken(newUserData);
+  const tokenNewUser = generateToken(newUserData);
   return { status: 201, data: { token: tokenNewUser } };
 };
 
+const getAll = () => User.findAll({ attributes: { exclude: ['password'] } });
+
 module.exports = {
   insert,
+  getAll,
 };
