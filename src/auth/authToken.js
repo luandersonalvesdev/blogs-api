@@ -11,4 +11,6 @@ const getPayload = (token) => {
   return payload;
 };
 
-module.exports = { generateToken, getPayload };
+const getPayloadWithoutBearer = (token) => jwt.verify(token, secret);
+
+module.exports = { generateToken, getPayload, getPayloadWithoutBearer };
