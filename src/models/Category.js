@@ -3,8 +3,8 @@
  * @param {import('sequelize').Sequelize} sequelize 
  * @param {import('sequelize').DataTypes} DataTypes 
  */
-const CategoryModel = (sequelize, DataTypes) => {
-  const CategorySchema = sequelize.define(
+const CategorySchema = (sequelize, DataTypes) => {
+  const CategoryModel = sequelize.define(
     'Category',
     {
       id: { type: DataTypes.INTEGER, primaryKey: true },
@@ -16,7 +16,7 @@ const CategoryModel = (sequelize, DataTypes) => {
     },
   );
 
-  return CategorySchema;
+  return CategoryModel;
 };
 
-module.exports = CategoryModel;
+module.exports = CategorySchema;

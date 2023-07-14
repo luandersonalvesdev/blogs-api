@@ -3,8 +3,8 @@
  * @param {import('sequelize').Sequelize} sequelize 
  * @param {import('sequelize').DataTypes} DataTypes 
  */
-const BlogPostModel = (sequelize, DataTypes) => {
-  const BlogPostSchema = sequelize.define(
+const BlogPostSchema = (sequelize, DataTypes) => {
+  const BlogPostModel = sequelize.define(
     'BlogPost',
     {
       id: { type: DataTypes.INTEGER, primaryKey: true },
@@ -21,14 +21,14 @@ const BlogPostModel = (sequelize, DataTypes) => {
     }
   );
 
-  BlogPostSchema.associate = (models) => {
-    BlogPostSchema.belongsTo(
+  BlogPostModel.associate = (models) => {
+    BlogPostModel.belongsTo(
       models.User,
       { foreignKey: 'userId', as: 'user' }
     )
   }
 
-  return BlogPostSchema;
+  return BlogPostModel;
 };
 
-module.exports = BlogPostModel;
+module.exports = BlogPostSchema;

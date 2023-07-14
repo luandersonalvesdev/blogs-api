@@ -3,8 +3,8 @@
  * @param {import('sequelize').Sequelize} sequelize 
  * @param {import('sequelize').DataTypes} DataTypes 
  */
-const UserModel = (sequelize, DataTypes) => {
-  const UserSchema = sequelize.define(
+const UserSchema = (sequelize, DataTypes) => {
+  const UserModel = sequelize.define(
     'User',
     {
       id: { type: DataTypes.INTEGER, primaryKey: true },
@@ -20,14 +20,14 @@ const UserModel = (sequelize, DataTypes) => {
     },
   );
 
-  UserSchema.associate = (models) => {
-    UserSchema.hasMany(
+  UserModel.associate = (models) => {
+    UserModel.hasMany(
       models.BlogPost,
       { foreignKey: 'id', as: 'blogPosts' }
     )
   }
 
-  return UserSchema;
+  return UserModel;
 };
 
-module.exports = UserModel;
+module.exports = UserSchema;
