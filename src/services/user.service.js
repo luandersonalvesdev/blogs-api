@@ -25,8 +25,15 @@ const getById = async (userId) => {
   return { status: 200, data };
 };
 
+const removeMe = async (userData) => {
+  const { id } = await User.findOne({ where: { email: userData.email } });
+  await User.destroy({ where: { id } });
+  return { status: 204 };
+};
+
 module.exports = {
   insert,
   getAll,
   getById,
+  removeMe,
 };

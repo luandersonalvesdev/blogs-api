@@ -17,8 +17,15 @@ const getById = async (req, res) => {
   return res.status(status).json(data);
 };
 
+const removeMe = async (req, res) => {
+  const userData = req.payload;
+  const { status, data } = await userService.removeMe(userData);
+  return res.status(status).json(data);
+};
+
 module.exports = {
   insert,
   getAll,
   getById,
+  removeMe,
 };
