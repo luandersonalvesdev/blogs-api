@@ -33,10 +33,17 @@ const remove = async (req, res) => {
   return res.status(status).json(data);
 };
 
+const getByQuery = async (req, res) => {
+  const { q } = req.query;
+  const { status, data } = await postService.getByQuery(q);
+  return res.status(status).json(data);
+};
+
 module.exports = {
   insert,
   getAll,
   getById,
   update,
   remove,
+  getByQuery,
 };
