@@ -20,7 +20,8 @@ const jwtValidationWithoutBearer = (req, res, next) => {
     if (!auth) return res.status(401).json({ message: 'Token not found' });
 
     const payload = getPayloadWithoutBearer(auth);
-    req.payload = payload;
+    const { pass, ...payloadWithoutPass } = payload;
+    req.payload = payloadWithoutPass;
 
     next();
   } catch (error) {

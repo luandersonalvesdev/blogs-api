@@ -5,8 +5,8 @@ const insert = async (newCategory) => {
   const { error } = categorySchemaValidation.validate(newCategory);
   if (error) return { status: 400, data: { message: error.message } };
 
-  const data = await Category.create(newCategory);
-  return { status: 201, data: { id: data.null, name: newCategory.name } };
+  const { id } = await Category.create(newCategory);
+  return { status: 201, data: { id, name: newCategory.name } };
 };
 
 const getAll = () => Category.findAll();

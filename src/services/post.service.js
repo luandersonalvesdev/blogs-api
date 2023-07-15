@@ -26,7 +26,6 @@ const insert = async (postData, payload) => {
 
   if (error) {
     const { message } = error;
-    console.log('ERROR CODIGO', error);
     return { status: 400, data: { message } };
   }
 
