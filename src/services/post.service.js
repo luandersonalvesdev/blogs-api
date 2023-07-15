@@ -1,5 +1,5 @@
 const { BlogPost, User, PostCategory, Category, sequelize } = require('../models');
-const postSchemaValidation = require('../validation/postSchemaValidation');
+const { newPostValidation, updatePostValidation } = require('../validation/postSchemaValidation');
 
 const doingInsertTransaction = async (postData, payload) => {
   const { id: userId } = await User.findOne({ where: { email: payload.email } });
@@ -22,7 +22,7 @@ const doingInsertTransaction = async (postData, payload) => {
 };
 
 const insert = async (postData, payload) => {
-  const { error } = postSchemaValidation.validate(postData);
+  const { error } = newPostValidation.validate(postData);
 
   if (error) {
     const { message } = error;
@@ -56,8 +56,22 @@ const getById = async (postId) => {
   return { status: 200, data: post };
 };
 
+const update = async (id, postUpdates, userData) => {
+  const { id: userId } = await User.findOne({ where: { email: userData.email } });
+  if (userId !== Number(id)) return { status: 401, data: { message: 'Unauthorized user' } };
+
+  const { error } = updatePostValidation.validate(postUpdates);
+  if (error) return { status: 400, data: { message: error.message } };
+
+  const updated = new Date();
+  await BlogPost.update({ ...postUpdates, updated }, { where: { id } });
+  const { data: postUpdated } = await getById(id);
+  return { status: 200, data: postUpdated };
+};
+
 module.exports = {
   insert,
   getAll,
   getById,
+  update,
 };
