@@ -1,4 +1,4 @@
-const { BlogPost, User, PostCategory, sequelize } = require('../models');
+const { BlogPost, User, PostCategory, Category, sequelize } = require('../models');
 const postSchemaValidation = require('../validation/postSchemaValidation');
 
 const doingInsertTransaction = async (postData, payload) => {
@@ -33,6 +33,17 @@ const insert = async (postData, payload) => {
   return { status: 201, data };
 };
 
+const getAll = async () => {
+  const posts = await BlogPost.findAll({
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  return { status: 200, data: posts };
+};
+
 module.exports = {
   insert,
+  getAll,
 };
