@@ -56,9 +56,15 @@ const getById = async (postId) => {
   return { status: 200, data: post };
 };
 
-const update = async (id, postUpdates, userData) => {
+const ownerChecker = async (postId, userData) => {
   const { id: userId } = await User.findOne({ where: { email: userData.email } });
-  if (userId !== Number(id)) return { status: 401, data: { message: 'Unauthorized user' } };
+  const { userId: userIdPost } = await BlogPost.findByPk(postId);
+  return userId !== userIdPost;
+};
+
+const update = async (id, postUpdates, userData) => {
+  const isNotOwner = await ownerChecker(Number(id), userData);
+  if (isNotOwner) return { status: 401, data: { message: 'Unauthorized user' } };
 
   const { error } = updatePostValidation.validate(postUpdates);
   if (error) return { status: 400, data: { message: error.message } };
@@ -69,9 +75,21 @@ const update = async (id, postUpdates, userData) => {
   return { status: 200, data: postUpdated };
 };
 
+const remove = async (postId, userData) => {
+  const post = await BlogPost.findByPk(postId);
+  if (!post) return { status: 404, data: { message: 'Post does not exist' } };
+
+  const isNotOwner = await ownerChecker(Number(postId), userData);
+  if (isNotOwner) return { status: 401, data: { message: 'Unauthorized user' } };
+
+  await BlogPost.destroy({ where: { id: postId } });
+  return { status: 204 };
+};
+
 module.exports = {
   insert,
   getAll,
   getById,
   update,
+  remove,
 };
