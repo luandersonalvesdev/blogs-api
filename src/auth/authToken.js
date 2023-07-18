@@ -6,12 +6,12 @@ const configJWT = { algorithm: 'HS256', expiresIn: '1d' };
 const generateToken = (payload) => jwt.sign(payload, secret, configJWT);
 
 const getPayload = (token) => {
-  const tokenSplited = token.split(' ');
+  const [withoutBaerer, withBaerer] = token.split(' ');
   let payload = '';
-  if (tokenSplited[1]) {
-    payload = jwt.verify(tokenSplited[1], secret);
+  if (withBaerer) {
+    payload = jwt.verify(withBaerer, secret);
   } else {
-    payload = jwt.verify(token, secret);
+    payload = jwt.verify(withoutBaerer, secret);
   }
   return payload;
 };
