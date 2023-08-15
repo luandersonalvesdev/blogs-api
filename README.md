@@ -10,15 +10,23 @@ Made using conventional commits, it's a RESTfull Express CRUD API to blog with S
   ```
   git@github.com:luandersonalvesdev/shooes-store.git
   ```
-  3. #### Climb the containers with: 
+  3. #### Enter the folder: 
+  ```
+  cd blogs-api
+  ```
+  4. #### Install the dependencies: 
+  ```
+  npm i
+  ```
+  5. #### Climb the containers with: 
   ```
   docker-compose up -d
   ```
-  4. #### Use to "enter" the container: 
+  6. #### Use to "enter" the container: 
   ```
   docker exec -it blogs_api bash
   ```
-  5. #### Inside the container start the API with: 
+  7. #### Inside the container start the API with: 
   ```
   npm start
   ```
