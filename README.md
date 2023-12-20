@@ -26,7 +26,11 @@ Made using conventional commits, it's a RESTfull Express CRUD API to blog with S
   ```
   docker exec -it blogs_api bash
   ```
-  7. #### Inside the container start the API with: 
+  7. #### Inside the container run the seeders: 
+  ```
+  npm run seed
+  ```
+  8. #### Inside the container start the API: 
   ```
   npm start
   ```
