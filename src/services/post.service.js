@@ -45,7 +45,6 @@ const getAll = async () => {
 };
 
 const getById = async (postId) => {
-  console.log(postId);
   const post = await BlogPost.findOne({
     where: { id: postId },
     include: [
